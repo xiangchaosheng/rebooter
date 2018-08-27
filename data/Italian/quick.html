@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+<meta charset=utf-8>
+<meta http-equiv=X-UA-Compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<link rel=icon href=favicon.ico>
+<title>Zobox Quick Setup</title>
+
+<head>
+	<style type="text/css">
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			background-color: lightgrey;
+			font-family: "Times New Roman", Times, serif;
+		}
+
+		.main {
+			padding: 5px 0;
+		}
+
+		.btn {
+			padding: 10px 15px;
+			border: none;
+			width: 100%;
+			font-family: "Times New Roman", Times, serif;
+			font-size: 14
+		}
+	</style>
+</head>
+
+<body>
+	<div style="background-color: #000;padding: 10px;margin:-8px;">
+		<a href="dashboard.html"><img src=images/logo.png alt="Zobox" style="width:30%;height:30%;"></a>
+	</div>
+	<div class="main" style="margin-top: 20px;">
+		<div style="font-size:2rpx;font-weight: bold;margin-bottom: 10px;">
+			<h3>Connetti al Wi-Fi del tuo Router:</h3>
+		</div>
+		<p>Seleziona la rete del Router dal sottostante elenco a discesa. Questo segnale Wi-Fi è quello che il Rebooter Router usa per monitorare la tua connessione Internet. </p>
+		<p>Una volta che l'SSID e la password del Wi-Fi sono stati inseriti correttamente, fai clic su Conferma per completare la configurazione iniziale. </p>
+	</div>
+
+	<form method="POST" action="/quick" class=form-horizontal>
+		<label for="network">Rete </label>
+
+		<div class="main">
+			<select id="ssidCombo" name="ssidCombo" STYLE="width:70%" required>
+			</select>
+		</div>
+
+		<div class="main">
+			<label for=labelPassword>Password
+			</label>
+		</div>
+
+		<div class="main">
+			<input id=inputPassword name="inputPassword" type="password" placeholder="Immetti la password" STYLE="width:70%" required>
+		</div>
+
+		<div class="main" style="padding-top:10px">
+			<button type="submit" href="connect.html" class="btn">Conferma</button>
+			<a href="welcome.html" style="text-decoration: none;color: blue;display: block;margin-top: 10px;text-align: center;" class="btn">Annulla</a>
+		</div>
+
+	</form>
+	<script>
+		function loadSSID(myArray) {
+			//window.alert("loading SSID");
+			var x = document.getElementById("ssidCombo");
+			//console.log(myArray.length);
+			for (var i = 0; i < myArray.length; i++) {
+				var option = document.createElement("option");
+				option.text = myArray[i].ssid;
+				x.add(option);
+			}
+		}
+	</script>
+	<script src="scripts/mySSID.js"> 
+	</script>
+</body>
+
+</html>

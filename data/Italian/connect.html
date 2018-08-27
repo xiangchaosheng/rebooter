@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+      <meta charset=utf-8>
+      <meta http-equiv=X-UA-Compatible content="IE=edge">
+      <meta name=viewport content="width=device-width,initial-scale=1">      
+      <link rel=icon href=favicon.ico>
+      <title>Zoboot Connect</title>
+      <style>
+            * {box-sizing: border-box;}
+            body {
+            background-color: lightgrey;   
+            font-family: "Times New Roman", Times, serif;         
+            }
+            .main {
+              padding-top: 30px;
+              padding: 5px 0; 
+              margin-top: 10px;    
+            }
+            .fr {
+              float: right;
+            }
+            .btn {padding: 10px 15px;border:none;width: 100%;display: block;margin-top: 10px;text-align: center;
+            	font-family: "Times New Roman", Times, serif;
+            	font-size: 14px;
+            }
+
+      </style>
+  </head>
+  <body>
+      <div style="background-color: #000;padding: 10px;margin:-8px;">
+          <a href="dashboard.html"><img src=images/logo.png alt="Zobox" style="width:30%;height:30%;"></a>
+      </div>  
+      <div class=main><h1 class=page-header style="font-size: 18px">
+        <h3>Connessione al tuo Router</h3>
+          <form method="POST">
+            <p> Tocca 'Conferma' qui di seguito per connettere il tuo Router Rebooter al Wi-Fi del Router. Potrebbero trascorrere pochi minuti prima che il Router Rebooter stabilisca una connessione. </p>
+            <p>Usa i LED del Router Rebooter per verificarne lo stato dell’avanzamento. </p>
+              <p>
+              <ul>
+                <li>LED Rosso Lampeggiante:
+                    <br>
+                    In attesa di collegare il tuo Router
+                <li>LED Blu Lampeggiante: <br>
+                    Connessione stabilita con il tuo Router, monitoraggio Internet OFF (disattivato)
+                <li>LED Blu Fisso: <br> 
+                    Connessione stabilita con il tuo Router, monitoraggio Internet ON (attivato)
+              </ul>
+              </p>
+
+          <p>Una volta che una connessione è stata stabilita, accedere al Cruscotto del proprio Rebooter dal proprio dispositivo cellulare entro 30 minuti:</p>     
+          <p><ul>
+            <li>iOS: Collega il tuo dispositivo mobile al tuo Router. Vai a <a href="http://zobox.local">http://zobox.local </a>dal tuo Safari.
+            <li>iOS/Android: Ricollega il dispositivo mobile alla rete Wi-Fi del tuo Rebooter (Zobox-ABCD), quindi vai a <a href="http://192.168.4.1">http://192.168.4.1</a> dal tuo Safari/Chrome.
+            </ul>
+          </p>
+          <p>
+          	 Visita <a href="http://www.zobox.xyz/help">http://www.zobox.xyz/help </a>per ulteriori informazioni.
+          </p>
+          <button type="submit"  id="submit" name="btnConfirm" class="btn">Conferma</button> 
+          <a href="quick.html" class="btn">Annulla</a>         
+          </form>
+      </div>
+      <script>          
+          var submitBtn = document.getElementById("submit");
+            //$("#submit").click(function(e) {
+            submitBtn.onclick = function(e) {
+              e.preventDefault();
+              var xhr = new XMLHttpRequest();
+              if (xhr) {
+                xhr.open('post', 'connect');
+                // xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                xhr.onreadystatechange = function () {
+                  if (xhr.readyState == 4 && xhr.status == 200) {
+                    //window.location.href = 'https://www.baidu.com';
+                  }
+                }
+                xhr.send();
+                alert("Zobox is conecting to Router. \nPlease check LED flash pattern for results.");
+              }
+            };
+          
+      </script>
+  </body>
+</html>

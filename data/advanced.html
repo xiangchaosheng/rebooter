@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="utf-8" />
+ <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+ <meta name="viewport" content="width=device-width,initial-scale=1" />
+ <link rel="icon" href="favicon.ico" />
+ <title>Zobox Advanced Settings</title>
+ <style type="text/css">
+    body {
+            background-color: lightgrey;   
+            font-family: "Times New Roman", Times, serif;         
+    }
+    .main {
+      padding: 5px 0; 
+      margin-top: 10px;    
+    }
+    .fr {
+      float: right;
+    }
+    input[type=text] {width: 90px;}
+ </style>
+</head>
+<body>
+    <div style="background-color: #000;padding: 10px;margin:-8px;">
+        <a href="dashboard.html"><img src=images/logo.png alt="Zobox" style="width:30%;height:30%;"></a>
+    </div>
+ <div class="main">
+   <h3>Advanced Setting</h3>
+   <form id="advanced_form" method="POST">
+    <div class="main">  
+      <label>Router reboot interval (minutes):</label>    
+      <span class="fr" >         
+        <select id="RebootInterval" name="RebootInterval" style="width: 70px;">
+        </select>                                                                              
+      </span>
+    </div>
+
+    <div class="main">      
+      <label>Ping interval (mm:ss):</label>
+      <span class="fr">        
+        <select id="PingInterval" name="PingInterval" style="width:70px;">
+        </select>
+      </span>                                
+    </div>
+
+    <div class="main">
+      <label>IP-1：</label>
+      <span class="fr">
+        <input type="text" id="IP1" name="IP1" style="display:inline-block;" >
+      </span>
+    </div>
+    <div class="main">
+      <label>IP-2：</label>
+      <span class="fr">
+        <input type="text" id="IP2" name="IP2" style="display:inline-block;" >
+      </span>
+    </div>
+    <div class="main">
+      <label>IP-3：</label>
+      <span class="fr">
+        <input type="text" id="IP3" name="IP3" style="display:inline-block;" >
+      </span>
+    </div>
+    <div class="main">
+      <label>IP-4：</label>
+      <span class="fr">
+        <input type="text" id="IP4" name="IP4" style="display:inline-block;" >
+      </span>
+    </div>
+    <div class="main">
+      <label>IP-5：</label>
+      <span class="fr">
+        <input type="text" id="IP5" name="IP5" style="display:inline-block;" >
+      </span>
+    </div>
+    <div class="main">  
+      <label>Language:</label>    
+      <span class="fr" >         
+        <select id="Language" name="LanguageSetting" style="width: 94px;">
+        </select>                                                                              
+      </span>
+    </div>
+
+
+    <div class="main" id="checkUpdate">
+      <label>Version</label>
+      <span class="fr">
+            <span id="Version" style="padding-right:12px;"></span> &gt;
+      </span>
+    </div>
+
+   </form>
+  </div>
+
+<script>
+  // load values
+    var otaAvailability; 
+
+    var x = document.getElementById('RebootInterval');        
+    var min = 1, max = 10, defaultValue = 2;
+    for (var i=min; i<=max; i++){
+        var option = document.createElement("option");
+        option.value = i; 
+        option.innerHTML = i;
+        x.appendChild(option);
+    }
+  //  document.getElementById('RebootInterval').selectedIndex = 1;
+  
+
+  var PingIntervalOptions = ["00:05", "00:10", "00:15", "00:20", "00:25", "00:30", "00:45", "01:00", "01:15", "01:30", "01:45", "02:00", "02:15", "02:30", "02:45", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "15:00", "20:00", "25:00", "30:00", "35:00", "40:00", "45:00", "50:00", "55:00", "60:00" ]
+  var sel = document.getElementById('PingInterval');        
+  for (var i=0; i<PingIntervalOptions.length; i++){
+      var opt = document.createElement('option');
+      opt.innerHTML = PingIntervalOptions[i];
+      opt.value = PingIntervalOptions[i];
+      sel.appendChild(opt);    
+  }
+  //document.getElementById('PingInterval').selectedIndex = 5;
+
+  var languageOptions = ["English", "French", "German", "Spanish"]
+  var languageSelection = document.getElementById('Language');
+  for (var i=0; i<languageOptions.length; i++){
+      var opt = document.createElement('option');
+      opt.innerHTML = languageOptions[i];
+      opt.value = languageOptions[i];
+      languageSelection.appendChild(opt); 
+  }
+
+function loadMyConfig(myConfig){
+  document.getElementById("RebootInterval").value = myConfig.RebootInterval;
+  document.getElementById("PingInterval").value = myConfig.PingInterval;
+  document.getElementById("Version").innerHTML = myConfig.Version;
+  document.getElementById("IP1").value = myConfig.IP1;
+  document.getElementById("IP2").value = myConfig.IP2;
+  document.getElementById("IP3").value = myConfig.IP3;
+  document.getElementById("IP4").value = myConfig.IP4;
+  document.getElementById("IP5").value = myConfig.IP5;
+  document.getElementById("Language").value = myConfig.Language;
+}
+
+window.onload = function () {
+    var routerInfo = myRouter;
+    var btnCheckUpdate = document.getElementById('checkUpdate');
+    btnCheckUpdate.onclick = function(e) {
+      if(routerInfo.routerSSID ==''){              //Not connected to router
+        alert("Please connect to Router that can access Internet to check update availability.");
+      }
+      else
+         requestPost("otaCheck=1", 'ota_requestSuccess');
+    };
+}
+
+
+// post data to Server
+document.getElementById('RebootInterval').onchange = function (e) {
+  var RebootInterval = document.getElementById('RebootInterval');
+  requestPost("RebootInterval="+ RebootInterval.value, 'requestSuccess')
+}
+
+
+document.getElementById('PingInterval').onchange = function (e) {
+  var PingInterval = document.getElementById('PingInterval');
+  requestPost("PingInterval=" + PingInterval.value, 'requestSuccess')
+}
+
+
+document.getElementById('IP1').onchange = function (e) {
+  var ip1 = document.getElementById('IP1')
+  requestPost("IP1="+ ip1.value, 'requestSuccess')
+}
+
+document.getElementById('IP2').onchange = function (e) {
+  var ip2 = document.getElementById('IP2')
+  requestPost("IP2="+ ip2.value, 'requestSuccess')
+}
+
+document.getElementById('IP3').onchange = function (e) {
+  var ip3 = document.getElementById('IP3')
+  requestPost("IP3="+ ip3.value, 'requestSuccess')
+}
+
+document.getElementById('IP4').onchange = function (e) {
+  var ip4 = document.getElementById('IP4')
+  requestPost("IP4="+ ip4.value, 'requestSuccess')
+}
+
+document.getElementById('IP5').onchange = function (e) {
+  var ip5 = document.getElementById('IP5')
+  requestPost("IP5="+ ip5.value, 'requestSuccess')
+}
+
+document.getElementById('Language').onchange = function (e) {
+  var languageSelected = document.getElementById('Language')
+  var respond = confirm("Do you want to change system language now?");
+  if (respond == true)
+  	requestPost("Language="+ languageSelected.value, 'requestSuccess')
+}
+
+
+function requestSuccess(resp) {
+    console.log(resp)
+}
+
+function ota_requestSuccess (resp){
+  console.log(resp);
+  if(resp.code == 1)
+      location.href="webOTA.html";
+}
+
+// request post
+function requestPost(postData, func) {
+    var xhr = new XMLHttpRequest();
+    if (xhr) {
+        xhr.open('post', 'advanced');
+        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {               
+                var rdata = JSON.parse(xhr.responseText);
+                eval(func)(rdata)
+                alert(rdata.data)
+            }
+        }                
+        xhr.send(postData);
+    }
+}
+ 
+</script>
+<script src="scripts/config.js"> </script>
+<script src="scripts/router.js"></script>
+</body>
+</html>

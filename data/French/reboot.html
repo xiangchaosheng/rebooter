@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta charset=utf-8>
+<meta http-equiv=X-UA-Compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<link rel=icon href=favicon.ico>
+<title>Zobox Reboot</title>
+<style>
+    body {
+    background-color: lightgrey;   
+    font-family: "Times New Roman", Times, serif;         
+    }
+    .main {
+      padding-top: 30px;
+      padding: 5px 0; 
+      margin-top: 10px;    
+    }
+    .fr {
+      float: right;
+    }
+		.btn {padding: 10px 15px;border:none;width: 100%;display: block;margin-top: 10px;text-align: center;
+			font-family: "Times New Roman", Times, serif; 
+			font-size: 14px;text-decoration: none;}
+		* {box-sizing: border-box;}
+
+</style>
+<body>
+		<div style="background-color: #000;padding: 10px;margin:-8px;">
+			<a href="dashboard.html"><img src=images/logo.png alt="Zobox" style="width:30%;height:30%;"></a>
+		</div>
+	<div class=main>
+		<h1 class=page-header style="font-size: 18px">Redémarrez votre appareil</h1>
+		<form method="POST">
+			<p>Vous pouvez redémarrer votre routeur maintenant en cliquant sur 'confirmer' ci-dessous. Cela effectuera un cycle de redémarrage en coupant l'alimentation de votre routeur pendant quelques secondes avant de le rallumer.</p>
+			<p>Un cycle de redémarrage peut prendre quelques minutes, après quoi le routeur Rebooter se reconnectera à votre routeur.</p>
+		  	<p>Utilisez les voyants du redémarrage du routeur pour vérifier sa progression.</p>
+          	<p>
+          	<ul>
+            <li>Voyant rouge LED clignotant:<br>
+                En attente de connexion de votre routeur
+            <li>Voyant bleu LED clignotante:<br>
+                Connexion établie avec votre routeur, surveillance Internet Désactivée
+            <li>Voyant bleu LED solide:<br> 
+                Connexion établie avec votre routeur, surveillance Internet Activée
+          	</ul>
+          	</p>
+			<button type="submit" class="btn btn-primary" name="" id="submit" class="btn">Confirmer</button> 
+			<a href="/dashboard.html" class="btn">Annuler</a>
+
+		</form>
+	</div>
+
+	<script>
+		var submitBtn = document.getElementById("submit");
+		  //$("#submit").click(function(e) {
+		  submitBtn.onclick = function(e) {
+		    e.preventDefault();
+		    var xhr = new XMLHttpRequest();
+		    if (xhr) {
+		      xhr.open('post', 'reboot');
+		      // xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+		      xhr.onreadystatechange = function () {
+		        if (xhr.readyState == 4 && xhr.status == 200) {
+		          //console.log(xhr.responseText)
+		        }
+		      }
+		      xhr.send();
+		    }
+		  };
+	</script>
+</body>
+</html>

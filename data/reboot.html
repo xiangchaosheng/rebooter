@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang=en>
+<meta charset=utf-8>
+<meta http-equiv=X-UA-Compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<link rel=icon href=favicon.ico>
+<title>Zobox Reboot</title>
+<style>
+    body {
+    background-color: lightgrey;   
+    font-family: "Times New Roman", Times, serif;         
+    }
+    .main {
+      padding-top: 30px;
+      padding: 5px 0; 
+      margin-top: 10px;    
+    }
+    .fr {
+      float: right;
+    }
+		.btn {padding: 10px 15px;border:none;width: 100%;display: block;margin-top: 10px;text-align: center;
+			font-family: "Times New Roman", Times, serif; 
+			font-size: 14px;text-decoration: none;}
+		* {box-sizing: border-box;}
+
+</style>
+<body>
+		<div style="background-color: #000;padding: 10px;margin:-8px;">
+			<a href="dashboard.html"><img src=images/logo.png alt="Zobox" style="width:30%;height:30%;"></a>
+		</div>
+	<div class=main>
+		<h1 class=page-header style="font-size: 18px">Reboot your Device</h1>
+		<form method="POST">
+			<p>You can reboot your router now by clicking 'confirm' below. This will perform a reboot cycle by cutting the power to your router for a few seconds before turning it back on. </p>
+
+			<p> A reboot cycle may take a few minutes, after which point Router Rebooter will reconnect to your router.</p>
+
+		  	<p>Use the LEDs on your Router Rebooter to check its progress. </p>
+          	<p>
+          	<ul>
+            <li>Blinking Red LED:  <br>
+                Waiting to connect your Router
+            <li>Blinking Blue LED: <br>
+                Connection established with your Router, Internet monitoring OFF
+            <li>Solid Blue LED: <br> 
+                Connection established with your Router, Internet monitoring ON
+          	</ul>
+          	</p>
+			<button type="submit" class="btn btn-primary" name="" id="submit" class="btn">Confirm</button> 
+			<a href="/dashboard.html" class="btn">Cancel</a>
+
+		</form>
+	</div>
+
+	<script>
+		var submitBtn = document.getElementById("submit");
+		  //$("#submit").click(function(e) {
+		  submitBtn.onclick = function(e) {
+		    e.preventDefault();
+		    var xhr = new XMLHttpRequest();
+		    if (xhr) {
+		      xhr.open('post', 'reboot');
+		      // xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+		      xhr.onreadystatechange = function () {
+		        if (xhr.readyState == 4 && xhr.status == 200) {
+		          //console.log(xhr.responseText)
+		        }
+		      }
+		      xhr.send();
+		    }
+		  };
+	</script>
+</body>
+</html>

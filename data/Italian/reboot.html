@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="it">
+<meta charset=utf-8>
+<meta http-equiv=X-UA-Compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<link rel=icon href=favicon.ico>
+<title>Zobox Reboot</title>
+<style>
+    body {
+    background-color: lightgrey;   
+    font-family: "Times New Roman", Times, serif;         
+    }
+    .main {
+      padding-top: 30px;
+      padding: 5px 0; 
+      margin-top: 10px;    
+    }
+    .fr {
+      float: right;
+    }
+		.btn {padding: 10px 15px;border:none;width: 100%;display: block;margin-top: 10px;text-align: center;
+			font-family: "Times New Roman", Times, serif; 
+			font-size: 14px;text-decoration: none;}
+		* {box-sizing: border-box;}
+
+</style>
+<body>
+		<div style="background-color: #000;padding: 10px;margin:-8px;">
+			<a href="dashboard.html"><img src=images/logo.png alt="Zobox" style="width:30%;height:30%;"></a>
+		</div>
+	<div class=main>
+		<h1 class=page-header style="font-size: 18px">Riavvia il tuo Dispositivo</h1>
+		<form method="POST">
+			<p>Puoi riavviare il tuo Router adesso cliccando su 'Conferma' qui di seguito. Questo darà luogo ad un ciclo di riavvio togliendo l’energia al Router per alcuni secondi prima di riaccenderlo.</p>
+
+			<p>Un ciclo di riavvio potrebbe richiedere di alcuni minuti, dopo di che il Router Rebooter si riconnetterà al tuo router.</p>
+
+		  	<p>Usa i LED del Router Rebooter per verificarne lo stato di avanzamento.</p>
+          	<p>
+          	<ul>
+            <li>LED Rosso Lampeggiante:<br>
+                In attesa di collegare il tuo Router
+            <li>LED Blu Lampeggiante:<br>
+                Connessione stabilita con il tuo Router, monitoraggio Internet OFF (disattivato)
+            <li>LED Blu Fisso<br> 
+                Connessione stabilita con il tuo Router, monitoraggio Internet ON (attivato)
+          	</ul>
+          	</p>
+			<button type="submit" class="btn btn-primary" name="" id="submit" class="btn">Conferma</button> 
+			<a href="/dashboard.html" class="btn">Annulla</a>
+
+		</form>
+	</div>
+
+	<script>
+		var submitBtn = document.getElementById("submit");
+		  //$("#submit").click(function(e) {
+		  submitBtn.onclick = function(e) {
+		    e.preventDefault();
+		    var xhr = new XMLHttpRequest();
+		    if (xhr) {
+		      xhr.open('post', 'reboot');
+		      // xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+		      xhr.onreadystatechange = function () {
+		        if (xhr.readyState == 4 && xhr.status == 200) {
+		          //console.log(xhr.responseText)
+		        }
+		      }
+		      xhr.send();
+		    }
+		  };
+	</script>
+</body>
+</html>

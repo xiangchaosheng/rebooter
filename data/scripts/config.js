@@ -1,0 +1,16 @@
+loadMyConfig({
+	"RebootInterval":"3",
+	"PingInterval":"00:30",		
+	"Version":"1.1",
+	"userSetReboot":"0",
+	"userSetRebootTime":"00:00",
+	"turnoffAPSet":"1",
+	"turnoffAPTime":"30",
+	"apPassword":"connectme",
+	"IP1":"8.8.8.8",
+	"IP2":"8.8.4.4",
+	"IP3":"139.130.4.5",
+	"IP4":"141.1.1.1",
+	"IP5":"199.7.91.13",
+	"Language":"English",
+})

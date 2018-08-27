@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+      <meta charset=utf-8>
+      <meta http-equiv=X-UA-Compatible content="IE=edge">
+      <meta name=viewport content="width=device-width,initial-scale=1">      
+      <link rel=icon href=favicon.ico>
+      <title>Zoboot Connect</title>
+      <style>
+            * {box-sizing: border-box;}
+            body {
+            background-color: lightgrey;   
+            font-family: "Times New Roman", Times, serif;         
+            }
+            .main {
+              padding-top: 30px;
+              padding: 5px 0; 
+              margin-top: 10px;    
+            }
+            .fr {
+              float: right;
+            }
+            .btn {padding: 10px 15px;border:none;width: 100%;display: block;margin-top: 10px;text-align: center;
+            	font-family: "Times New Roman", Times, serif;
+            	font-size: 14px;
+            }
+
+      </style>
+  </head>
+  <body>
+      <div style="background-color: #000;padding: 10px;margin:-8px;">
+          <a href="dashboard.html"><img src=images/logo.png alt="Zobox" style="width:30%;height:30%;"></a>
+      </div>  
+      <div class=main><h1 class=page-header style="font-size: 18px">
+        <h3>Verbindung zum Router herstellen</h3>
+          <form method="POST">
+            <p> Klicken Sie weiter unten auf 'Bestätigen', um Ihren Router Rebooter mit dem Wi-Fi Ihres Routers zu verbinden. Es kann einige Minuten dauern, bis der Router Rebooter eine Verbindung aufgebaut hat. </p>
+            <p>Nutzen Sie die LEDs auf Ihrem Router Rebooter, um den Fortschritt zu verfolgen. </p>
+              <p>
+              <ul>
+                <li>Blinkendes rotes LED-Licht:
+                    <br>
+                    Wartet darauf, Verbindung zu Ihrem Router aufzubauen
+                <li>Blinkendes blaues LED-Licht: <br>
+                    Verbindung zu Ihrem Router wurde hergestellt, das Internet wird NICHT überwacht
+                <li>Permanent leuchtendes blaues LED-Licht: <br> 
+                    Verbindung zu Ihrem Router wurde hergestellt, das Internet WIRD überwacht
+              </ul>
+              </p>
+
+          <p>Sobald die Verbindung aufgebaut wurde, sollte Sie die Übersichtsseite des Rebooters innerhalb von 20 Minuten über Ihr Mobilgerät aufrufen:</p>     
+          <p><ul>
+            <li>iOS: Verbinden Sie Ihr Mobilgerät mit Ihrem Router. Rufen Sie über Safari <a href="http://zobox.local">http://zobox.local </a>auf.
+            <li>iOS/Android: Verbinden Sie Ihr Mobilgerät erneut mit dem Wi-Fi (Zobox-ABCD) Ihres Rebooters und rufen Sie dann über Safari/Chrome <a href="http://192.168.4.1">http://192.168.4.1</a> auf.
+            </ul>
+          </p>
+          <p>
+          	 Besuchen Sie unsere Webseite <a href="http://www.zobox.xyz/help">http://www.zobox.xyz/help </a> falls Sie Hilfe benötigen.
+          </p>
+          <button type="submit"  id="submit" name="btnConfirm" class="btn">Bestätigen</button> 
+          <a href="quick.html" class="btn">Abbrechen</a>         
+          </form>
+      </div>
+      <script>          
+          var submitBtn = document.getElementById("submit");
+            //$("#submit").click(function(e) {
+            submitBtn.onclick = function(e) {
+              e.preventDefault();
+              var xhr = new XMLHttpRequest();
+              if (xhr) {
+                xhr.open('post', 'connect');
+                // xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                xhr.onreadystatechange = function () {
+                  if (xhr.readyState == 4 && xhr.status == 200) {
+                    //window.location.href = 'https://www.baidu.com';
+                  }
+                }
+                xhr.send();
+                alert("Zobox is conecting to Router. \nPlease check LED flash pattern for results.");
+              }
+            };
+          
+      </script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+{
+"otaVersion":"1.3",
+"otaFirmware":"1",
+"otaFileSys": "1",
+"otaURL":"http://update.zobox.co",
+"otaFirmwareFile": "A_Global_Async_Lite_v3.bin",
+"otaFileSysFile":"A_Global_Async_Lite_v3_FS.bin",
+"otaPortNum":""
+}

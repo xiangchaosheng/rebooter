@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta charset=utf-8>
+<meta http-equiv=X-UA-Compatible content="IE=edge">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<link rel="icon" href="favicon.ico">
+<title>Zobox Dashboard</title>
+<head>
+<style type="text/css">
+    body {
+            background-color: lightgrey;   
+            font-family: "Times New Roman", Times, serif;         
+    }
+    .mui-switch {
+        vertical-align: middle;
+        width: 47px;
+        height: 25px;
+        position: relative;
+        border: 1px solid #dfdfdf;
+        background-color: #fdfdfd;
+        box-shadow: #dfdfdf 0 0 0 0 inset;
+        border-radius: 20px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        background-clip: content-box;
+        display: inline-block;
+        -webkit-appearance: none;
+        user-select: none;
+        outline: none;
+    }
+
+    .mui-switch[type=checkbox]:focus {
+        outline: none;
+    }
+
+    .mui-switch[type=checkbox] {
+        margin-top: 0;
+    }
+
+    .mui-switch:before {
+        content: '';
+        width: 23px;
+        height: 23px;
+        position: absolute;
+        top: 0px;
+        left: 0;
+        border-radius: 20px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        background-color: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    .mui-switch:checked {
+        border-color: #64bd63;
+        box-shadow: #64bd63 0 0 0 16px inset;
+        background-color: #64bd63;
+    }
+
+    .mui-switch:checked:before {
+        left: 21px;
+    }
+
+    .mui-switch.mui-switch-animbg {
+        transition: background-color ease 0.4s;
+    }
+
+    .mui-switch.mui-switch-animbg:before {
+        transition: left 0.3s;
+    }
+
+    .mui-switch.mui-switch-animbg:checked {
+        box-shadow: #dfdfdf 0 0 0 0 inset;
+        background-color: #64bd63;
+        transition: border-color 0.4s, background-color ease 0.4s;
+    }
+
+    .mui-switch.mui-switch-animbg:checked:before {
+        transition: left 0.3s;
+    }
+
+    .mui-switch.mui-switch-anim {
+        transition: border cubic-bezier(0, 0, 0, 1) 0.4s, box-shadow cubic-bezier(0, 0, 0, 1) 0.4s;
+    }
+
+    .mui-switch.mui-switch-anim:before {
+        transition: left 0.3s;
+    }
+
+    .mui-switch.mui-switch-anim:checked {
+        box-shadow: #64bd63 0 0 0 16px inset;
+        background-color: #64bd63;
+        transition: border ease 0.4s, box-shadow ease 0.4s, background-color ease 1.2s;
+    }
+
+    .mui-switch.mui-switch-anim:checked:before {
+        transition: left 0.3s;
+    }
+
+    .bootstrap-switch {
+        border: none;
+    }
+
+    .main {
+        margin-top: 10px;
+    }
+
+    .main .content>div {
+        padding: 5px 0;
+    }
+
+    .fr {
+        float: right;
+    }
+    .withoutAMPM::-webkit-datetime-edit-ampm-field {
+        display: none;
+    }
+
+</style>
+</head>
+<body>
+        <div style="background-color: #000;padding: 10px;margin:-8px;">
+                <img src=images/logo.png alt="Zobox" style="width:30%;height:30%;">                
+        </div>
+        <div><h3>Tableau de bord</h3>
+        </div>
+<form id="dashboard_form" method="POST" style="margin-top: 20px;">
+         <div class="main">
+            <div class="content">  
+                <div id="btnQuickSetup">Wi-Fi du routeur:
+                    <span class="fr">
+                        >
+                    </span>
+                </div>
+                <div class="main">Surveillez ma connexion Internet:
+                    <span class="fr">                        
+                        <input class="mui-switch mui-switch-animbg" id="Status" type="checkbox">                      
+                    </span>
+                </div>
+                <div id="ssidLabelWrap" style="display: none;">
+                    <div>Router Wi-Fi:
+                        <span class="fr" id="ssidLabel"></span>
+                    </div>
+                </div>                
+                <div id="localIPWrap" style="display: none;">
+                    <div>Router Rebooter's IP:
+                        <span class="fr" id="localIPLabel"></span>
+                    </div>
+                </div>
+                <div class="main" id="btnReboot">Redémarrez mon routeur maintenant
+                    <span class="fr">                        
+                        >                        
+                    </span>
+                </div>                
+                <div class="main">Redémarrez mon routeur quotidiennement à:
+                    <span class="fr">                        
+                        <input type="time" id="rebootTime" style="font-color:black;">
+                    </span>
+                </div>
+                <div class="main">Activer le redémarrage quotidien:
+                    <span class="fr">
+                        <input class="mui-switch mui-switch-animbg" id="rebootSet" type="checkbox">
+                    </span>
+                </div>
+                <div style="margin-top: 10px">
+                    <span style="max-width: 70%;display: inline-block;">
+                            Désactiver le Wi-Fi Zobox-ABCD après (minutes):
+                    </span>
+                    <span class="fr">    
+                        <select id="turnoffAPTime" name="turnoffAPTime" style="width:80px;"></select>                                                    
+                    </span>
+                </div>
+                <div class="main">Activer la fonctionnalité Rebooter Wi-Fi désactivée:
+                    <span class="fr">
+                        <input class="mui-switch mui-switch-animbg" id="turnoffAPSet" type="checkbox">
+                    </span>
+                </div>
+                <div class="main" id="btnChangeAPpassword">Changer le mot de passe Wi-Fi de Zobox-ABCD:
+                    <span class="fr">                        
+                        >                        
+                    </span>
+                </div> 
+                <div class="main" id="history">Activité récente
+                    <span class="fr">
+                        >                        
+                    </span>
+                </div>
+                <div class="main" id="advanced">Réglages avancés
+                    <span class="fr">
+                        >                        
+                    </span>
+                </div>              
+            </div>
+        </div>
+
+    <script>
+        // fill in values at load
+        var connectedToRouter;
+
+        var x = document.getElementById('turnoffAPTime');        
+        var min = 0, max = 60, defaultValue = 20;
+        for (var i=min; i<=max; i++){
+            var option = document.createElement("option");
+            option.value = i; 
+            option.innerHTML = i;
+            x.appendChild(option);
+        }
+        x.value = defaultValue;
+
+
+        // buttons link to other pages
+        document.getElementById('btnQuickSetup').onclick = function (e) {
+            location.href = "quick.html";
+        }        
+        // reboot now
+        document.getElementById('btnReboot').onclick = function (e) {
+            location.href = "reboot.html";
+        }
+        document.getElementById('btnChangeAPpassword').onclick = function (e){
+            location.href = "security.html";
+        }
+        document.getElementById('history').onclick = function (e) {
+            location.href = "history.html";
+        }
+        // document.getElementById('advanced').onclick = function (e) {        	
+        //  	requestPost("otaCheck=1", 'advanced_requestSuccess')    	    
+        // } 
+
+        document.getElementById('advanced').onclick = function (e) {  
+            if(localIpAcquired != '')          
+                requestPost("otaCheck=1", 'advanced_requestSuccess');  
+            else                      
+                location.href = "advanced.html";
+        }                
+
+        // load config from JSON received 
+        var routerSSIDacquired;
+        var localIpAcquired;
+        var xhr = new XMLHttpRequest();
+        if (xhr) {
+            xhr.open('GET', 'dashboard_load');
+            xhr.setRequestHeader('content-type', 'application/json; charset=UTF-8');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var rdata = JSON.parse(xhr.responseText);
+                    console.log(rdata)
+                    if (rdata.code) {
+                        loadConfig(rdata.data)                      // call loadConfig(config) function
+                    }
+                }
+            }
+            xhr.send();
+        }
+        // assign values to each control items on this page via multiple functions
+        function loadConfig(config) {
+            connectedToRouter = (config.localIP != '' ? true: false);            
+            if (connectedToRouter){
+                document.getElementById('Status').disabled = false;
+                monitorStatus(config.status == "1" ? true: false)
+            }
+            else{
+                console.log("disable checkbox");
+                document.getElementById('Status').disabled = true;                
+            }
+
+            rebootTimeSet(config.rebootTime)
+            rebootSet(config.rebootSet == "1" ? true :false)
+            turnoffAPTime(config.turnoffAPTime)
+            turnoffAPSet(config.turnoffAPSet == "1" ? true :false)
+            routerSSIDacquired = config.routerSSID
+            localIpAcquired = config.localIP       
+            //ssidLabel(config.status == "1" ? true: false, routerSSIDacquired)
+            //localIP(config.status == "1" ? true: false, localIpAcquired)  
+            ssidLabel(config.routerSSID != '' ? true: false, routerSSIDacquired)
+            localIP(config.localIP != '' ? true: false, localIpAcquired)           
+        }
+
+        
+        function monitorStatus(status) {
+            var monitorStatus = document.getElementById('Status')
+            monitorStatus.checked = status            
+        }
+
+        function rebootTimeSet(value) {
+            var rebootTime = document.getElementById('rebootTime')
+            rebootTime.value = value
+        }
+
+        // reboot set 
+        function rebootSet(value) {
+            var rebootSet = document.getElementById('rebootSet')
+            rebootSet.checked = value
+        }
+
+        function turnoffAPTime(value) {
+            var turnoffAPTime = document.getElementById('turnoffAPTime')
+            turnoffAPTime.value = value
+        }     
+
+        function turnoffAPSet(status) {
+            var turnoffAPSet = document.getElementById('turnoffAPSet')
+            turnoffAPSet.checked = status
+        }
+
+        
+        function ssidLabel(status, value) {
+            if (status) {
+                document.getElementById('ssidLabelWrap').style.display = 'block'
+                document.getElementById('ssidLabel').innerText = routerSSIDacquired                
+            } else {
+                document.getElementById('ssidLabelWrap').style.display = 'none'
+            }
+        }
+
+        function localIP(status, value) {
+            if (status) {
+                document.getElementById('localIPWrap').style.display = 'block'
+                document.getElementById('localIPLabel').innerText = localIpAcquired                
+            } else {
+                document.getElementById('localIPWrap').style.display = 'none'
+            }
+        }
+
+
+        function requestSuccess(resp) {
+            console.log(resp)
+        }
+        function advanced_requestSuccess(resp) {
+        	location.href = "advanced.html";
+        }
+
+        // event
+        document.getElementById('Status').onchange = function (e) {
+            var monitorStatus = document.getElementById('Status')
+            var v = monitorStatus.checked ? 1 : 0;
+            //ssidLabel(monitorStatus.checked, routerSSIDacquired)
+            //localIP(monitorStatus.checked, localIpAcquired)
+            requestPost("status=" + v, 'requestSuccess') 
+            if(v == 1)
+                alert("Zobox Router Rebooter starts monitoring your Internet.")
+            else
+                alert("Zobox Router Rebooter stops monitoring your Internet.")
+        }
+
+        document.getElementById('rebootTime').onchange = function (e) { 
+            var rebootTime =   document.getElementById('rebootTime')         
+            requestPost("time=" + rebootTime.value, 'requestSuccess')     
+        }
+
+        document.getElementById('rebootSet').onchange = function (e) {
+            var rebootSetStatus = document.getElementById('rebootSet')
+            var v = rebootSetStatus.checked ? 1 : 0;
+            requestPost("isRebootOpen=" + v, 'requestSuccess')
+            if(v == 1)
+                alert("Zobox Router Rebooter will self restart daily at " + document.getElementById('rebootTime').value)
+            else
+                alert("Zobox Router Rebooter will stop daily self restart.")            
+        }
+
+        document.getElementById('turnoffAPTime').onchange = function (e) {
+            var turnoffAPTime = document.getElementById('turnoffAPTime')
+            requestPost("turnoffAPTime=" + turnoffAPTime.value, 'requestSuccess')     
+        }
+        document.getElementById('turnoffAPSet').onchange = function (e) {
+            var turnoffAPSetStatus = document.getElementById('turnoffAPSet')
+            var v = turnoffAPSetStatus.checked ? 1 : 0;
+            requestPost("turnoffAPSet=" + v, 'requestSuccess')
+            if(v == 1)
+                alert("Zobox Router Rebooter Wi-Fi Zobox-ABCD will turn off after " + document.getElementById('turnoffAPTime').value + " minutes.")
+            else
+                alert("Zobox Router Rebooter Wi-Fi Zobox-ABCD will stay.")            
+        }
+
+
+        // request post
+        function requestPost(postData, func) {
+            var xhr = new XMLHttpRequest();
+            if (xhr) {
+                xhr.open('post', 'dashboard');
+                xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var rdata = JSON.parse(xhr.responseText);
+                        eval(func)(xhr.responseText) 
+                    }
+                }                
+                xhr.send(postData);
+            }
+        }
+
+    </script>
+</form>
+</body>
+</html>

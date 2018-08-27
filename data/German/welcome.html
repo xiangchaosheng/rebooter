@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+      <meta charset=utf-8>
+      <meta http-equiv=X-UA-Compatible content="IE=edge">
+      <meta name=viewport content="width=device-width,initial-scale=1">      
+      <link rel=icon href=favicon.ico>
+      <title>Zobox Welcome</title>
+      <style>
+            body {
+            background-color: lightgrey;   
+            font-family: "Times New Roman", Times, serif;         
+            }
+            .main {
+              padding-top: 30px;
+              padding: 5px 0; 
+              margin-top: 10px;    
+            }
+            .fr {
+              float: right;
+            }
+            .btn {padding: 10px 15px;border:none;width: 100%;display: block;margin-top: 10px;text-align: center;font-size: 14px; color: blue; text-decoration: none;}
+
+      </style>
+  </head>
+  <body>
+      <div style="background-color: #000;padding: 10px;margin:-8px;">
+        <a href="dashboard.html">  <img src=images/logo.png alt="Zobox" style="width:30%;height:30%;"> </a>
+      </div>
+      <div class=main><h1 class=page-header style="font-size: 18px">
+        <h3>Willkommen beim Zobox Router Rebooter</h3>
+        <form method="POST">
+            <button type="submit" id="continue" name="btnContinue" class="btn">Weiter</button> 
+        </form>
+      </div>
+      <script>   
+        var continueBtn = document.getElementById("continue");
+        continueBtn.onclick = function (e)  { 
+            e.preventDefault();
+            var xhr = new XMLHttpRequest();
+            if (xhr) {
+              xhr.open('post', '/welcome');
+              xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+              xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {           
+                  var rdata = JSON.parse(xhr.responseText);
+                  if (rdata.code == 1) {          //必须与Arduino C 中的 server.send() 中定义匹配
+                    location.href = '/dashboard.html';
+                  } 
+                  else 
+                    if (rdata.code == 0) {
+                      location.href = '/security.html';
+                    } 
+                    else {                  
+                      alert("Error: cannot determine connection status with your Router.");
+                    } 
+                }
+              }          
+            }
+            xhr.send();
+        };
+      </script>
+  </body>
+</html>

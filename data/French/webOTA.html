@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset=utf-8>
+<meta http-equiv=X-UA-Compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<link rel=icon href=favicon.ico>
+<title>Zobox Web Update</title>
+<style>
+    body {
+        background-color: lightgrey;   
+        font-family: "Times New Roman", Times, serif;         
+    }
+    .main {
+        margin-top: 10px;
+    }
+    .main .content>div{
+        padding: 5px 0;
+    }
+    .fr{
+        float: right;
+    }
+    .sub-header{
+        font-size: 16px;
+    }
+    .btn {padding: 10px 15px;border:none;width: 100%;display: block;margin-top: 10px;text-align: center;
+      font-family: "Times New Roman", Times, serif; 
+      font-size: 14px;text-decoration: none;}
+    * {box-sizing: border-box;}
+    html,body {padding:0;margin:0;}
+    
+</style>
+</head>
+<body>
+    <div style="background-color: #000;padding: 10px;">
+        <a href="dashboard.html"><img src=images/logo.png alt="Zobox" style="width:30%;height:30%;"></a>
+    </div>
+    <div style="padding: 10px;">
+        <div class="main">
+          <H3>Mise à jour du firmware</H3>
+          <div>          	
+              <p>La mise à jour du micrologiciel est disponible, ce qui peut prendre plusieurs minutes.</p>
+              <p>Veuillez maintenir votre connexion Wi-Fi Zobox pour que votre appareil puisse télécharger un nouveau micrologiciel à partir d'Internet.</p>
+              <p>Les voyants bleu et rouge clignotent lorsque le micrologiciel se met à jour. </p>
+              <p>Une fois terminé, votre Zobox redémarrera automatiquement. </p>
+              <p>Cliquez sur "Mettre à jour" ci-dessous pour commencer la mise à jour du firmware.</p>
+          </div>                
+        </div>
+        <div class="main" style="padding-top: 10px;">
+            <button type="submit" class="btn" id="submit" name="btnConfirm">Mettre à jour</button>
+            <a href="/advanced.html" class="btn">Annuler</a>
+        </div>
+        
+        
+    </div>
+
+
+
+<script>
+  var submitBtn = document.getElementById("submit");  
+  
+  submitBtn.onclick = function (e) {  
+  	alert("Firmware update in progress. Please check your device LED flash pattern to check progress.")  
+    e.preventDefault();
+    var xhr = new XMLHttpRequest();
+    if (xhr) {
+      xhr.open('post', 'webOTA');		
+      xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          console.log(xhr.responseText)
+          //loading.style.display = "none";  
+          //location.href='/reboot.html';           //after update completed, go to /reboot page
+        }
+      }
+      xhr.send();
+    }
+  };
+
+</script>
+</body>
+</html>

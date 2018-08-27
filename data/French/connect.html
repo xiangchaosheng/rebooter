@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+      <meta charset=utf-8>
+      <meta http-equiv=X-UA-Compatible content="IE=edge">
+      <meta name=viewport content="width=device-width,initial-scale=1">      
+      <link rel=icon href=favicon.ico>
+      <title>Zoboot Connect</title>
+      <style>
+            * {box-sizing: border-box;}
+            body {
+            background-color: lightgrey;   
+            font-family: "Times New Roman", Times, serif;         
+            }
+            .main {
+              padding-top: 30px;
+              padding: 5px 0; 
+              margin-top: 10px;    
+            }
+            .fr {
+              float: right;
+            }
+            .btn {padding: 10px 15px;border:none;width: 100%;display: block;margin-top: 10px;text-align: center;
+            	font-family: "Times New Roman", Times, serif;
+            	font-size: 14px;
+            }
+
+      </style>
+  </head>
+  <body>
+      <div style="background-color: #000;padding: 10px;margin:-8px;">
+          <a href="dashboard.html"><img src=images/logo.png alt="Zobox" style="width:30%;height:30%;"></a>
+      </div>  
+      <div class=main><h1 class=page-header style="font-size: 18px">
+        <h3>Se connecter à votre routeur</h3>
+          <form method="POST">
+            <p>Appuyez sur "Confirmer" ci-dessous pour connecter votre réinitialisateur de routeur au réseau Wi-Fi de votre routeur. Le réinitialisateur de routeur peut prendre quelques minutes pour établir une connexion. </p>
+            <p>Utilisez les voyants du réinitialisateur du routeur pour vérifier sa progression. </p>
+              <p>
+              <ul>
+                <li>Voyant rouge LED clignotant:<br>
+                    En attente de connexion de votre routeur
+                <li>Voyant bleu LED clignotante:<br>
+                    Connexion établie avec votre routeur, surveillance Internet Désactivée
+                <li>Voyant bleu LED solide:<br> 
+                    Connexion établie avec votre routeur, surveillance Internet Activée
+              </ul>
+              </p>
+          <p>Une fois la connexion établie, accédez au tableau de bord de votre réinitialisateur à partir de votre mobile dans 30 minutes:</p>     
+          <p><ul>
+            <li>iOS: connectez votre appareil mobile à votre routeur. Allez à <a href="http://zobox.local">http://zobox.local </a> depuis votre Safar.
+            <li>iOS/Android: reconnectez votre appareil mobile au Wi-Fi de votre réinitialisateur (Zobox-ABCD), puis accédez à <a href="http://192.168.4.1">http://192.168.4.1</a> depuis votre Safari/Chrome.
+            </ul>
+          </p>
+          <p>
+          	 Visitez <a href="http://www.zobox.xyz/help">http://www.zobox.xyz/help </a>pour plus d'aide..
+          </p>
+          <button type="submit"  id="submit" name="btnConfirm" class="btn">Confirmer</button> 
+          <a href="quick.html" class="btn">Annuler</a>         
+          </form>
+      </div>
+      <script>          
+          var submitBtn = document.getElementById("submit");
+            //$("#submit").click(function(e) {
+            submitBtn.onclick = function(e) {
+              e.preventDefault();
+              var xhr = new XMLHttpRequest();
+              if (xhr) {
+                xhr.open('post', 'connect');
+                // xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                xhr.onreadystatechange = function () {
+                  if (xhr.readyState == 4 && xhr.status == 200) {
+                    //window.location.href = 'https://www.baidu.com';
+                  }
+                }
+                xhr.send();
+                alert("Zobox is conecting to Router. \nPlease check LED flash pattern for results.");
+              }
+            };
+          
+      </script>
+  </body>
+</html>

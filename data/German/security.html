@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="de">
+<meta charset=utf-8>
+<meta http-equiv=X-UA-Compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Zobox Security</title>
+
+<head>
+	<style type="text/css">
+		body {
+			background-color: lightgrey;
+			font-family: "Times New Roman", Times, serif;
+		}
+
+		.main {
+			margin-top: 10px;
+		}
+
+		.main .content>div {
+			padding: 5px 0;
+		}
+
+		input {
+			padding: 10px 10px;
+			width: 100%;
+		}
+
+		label {
+			display: block;
+			margin: 10px 0;
+		}
+
+		.fr {
+			float: right;
+		}
+
+		.btn {
+			padding: 10px 15px;
+			border: none;
+			width: 100%;
+			display: block;
+			margin-top: 10px;
+			text-align: center;
+			font-family: "Times New Roman", Times, serif; 
+			font-size: 14px;
+			text-decoration: none;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+	</style>
+
+	<head>
+
+		<body>
+			<div style="background-color: #000;padding: 10px;margin:-8px;">
+				<a href="dashboard.html"><img src=images/logo.png alt="Zobox" style="width:30%;height:30%;"></a>
+			</div>
+			<div>
+				<H3>Zobox Sicherheit</H3>
+			</div>
+			<div style="margin-top: 25px;">
+				<form method="POST">
+					<div>						
+						<p>Bitte überlegen Sie sich, ob Sie das Passwort für den Zugriff auf den Router Rebooter von "connectme" ändern und ein sichereres Passwort nutzen möchten. </p>
+						<p>Sie können diesen Schritt überspringen und später zurückkommen, aber wir empfehlen Ihnen, Ihr Password jetzt zu ändern, um Ihre Sicherheit zu erhöhen. Bitte beachten Sie, dass dies keinen Einfluss auf das Passwort Ihres Wi-Fi Netzwerkes zuhause hat.</p>
+						<p>Ihr neues Passwort gilt ab dem nächsten Neustart.</p>
+
+						<Label>Passwort eingeben:</Label>
+						<input name="inputPassword1" type="password" id="inputPassword1" placeholder="Passwort" required>
+					</div>
+					<div>
+						<label>Passwort erneut eingeben:</label>
+						<input name="inputPassword2" type="password" id="inputPassword2" placeholder="Passwort bestätigen" required>
+					</div>
+
+					<p>
+						<div>
+							<button type=submit id="submit" class="btn">Bestätigen</button>
+						</div>
+					</p>
+					<div>
+						<a href="/quick.html" class="btn">überspringen</a>
+					</div>
+				</form>
+			</div>
+			<script>
+				//input check
+				var submitBtn = document.getElementById("submit");
+				submitBtn.onclick = function (e) {
+					e.preventDefault();
+					var inputPassword1 = document.getElementById("inputPassword1").value.trim();
+					var inputPassword2 = document.getElementById("inputPassword2").value.trim();
+					if (inputPassword1.length< 8 || inputPassword1.length > 32 || inputPassword2.length< 8 || inputPassword2.length > 32){
+							alert("Password must be longer than 8 and less than 32 characters. \nPlease try again.")
+							return;
+					}
+					if (inputPassword1 != inputPassword2) {
+						alert('Passwords entered are not the same. Please try again.');
+						document.getElementById("inputPassword1").value = '';  //清理掉密码框1的输入
+						document.getElementById("inputPassword2").value = '';  //清理掉密码框2的输入
+						return
+					}
+					else {
+						// submit data to Server
+						var xhr = new XMLHttpRequest();
+						if (xhr) {
+							xhr.open('post', '/security');
+							xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+							xhr.onreadystatechange = function () {
+								if (xhr.readyState == 4 && xhr.status == 200) {
+									//console.log(xhr.responseText)
+									var rdata = JSON.parse(xhr.responseText);
+									if (rdata.code == 0) {
+										alert(rdata.msg);
+									}
+									if (rdata.code == 1) {			//必须与Arduino中的 server.send() 中定义匹配
+										location.href = '/quick.html';
+										alert(rdata.msg);
+									}
+									if (rdata.code == 2) {
+										location.href = '/dashboard.html';
+										alert(rdata.msg);
+									}
+
+								}
+							}
+							xhr.send('inputPassword1=' + inputPassword1);
+						}
+					}
+				};
+
+				String.prototype.trim = function () {
+					return this.replace(/(^\s*)|(\s*$)/g, "");
+				}
+
+			</script>
+		</body>
+
+</html>

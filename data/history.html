@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=X-UA-Compatible content="IE=edge">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<link rel=icon href=favicon.ico>
+<title>Zobox Recent Activity</title>
+<style>
+    body {
+        background-color: lightgrey;   
+        font-family: "Times New Roman", Times, serif;         
+    }
+    .main {
+        margin-top: 10px;
+    }
+    .main .content>div{
+        padding: 5px 0;
+    }
+    .fr{
+        float: right;
+    }
+    .sub-header{
+        font-size: 16px;
+    }
+    .table th{
+        font-size: 14px;
+        font-weight: normal;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 5px;
+        font-weight: normal;
+    }
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+    form {margin: 10px 0 20px 0;}
+</style>
+</head>
+<body>
+    <div style="background-color: #000;padding: 10px;margin:-8px;">
+        <a href="dashboard.html"><img src=images/logo.png alt="Zobox" style="width:30%;height:30%;"></a>
+    </div>
+    <div class=main style="margin-top: 20px;">
+        <div class="content">
+            <form method="POST">
+                <div>
+                    <H3>Recent Activity</H3>                
+                    <button type="submit" id="clearLogBtn" style="font-size: 14px; float:right; border:none;padding:5px 15px;color:blue;border-radius: 5px;">Clear Log</button>
+                </div>
+            </form>
+            <table id="historyTable">                               
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>IP</th>
+                    <th>Condition</th>
+                </tr>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+    </div>
+
+<script src="scripts/history.js"></script>
+<script>
+  //history log sorting and display
+  var data = histories.reverse();
+  var str = "";
+  data.forEach(function (item, idx) {
+    str += "<tr><td>" + item['date'] + "</td><td>" + item["time"] + "</td><td>" + item['ip'] + "</td><td>" + item['action'] + "</td></tr>";   
+  })
+   document.getElementById("tbody").innerHTML = str;  
+</script>
+<script>
+    var submitBtn = document.getElementById("clearLogBtn");    
+    submitBtn.onclick = function(e) {
+      e.preventDefault();
+      var xhr = new XMLHttpRequest();
+      if (xhr) {
+        xhr.open('post', '/history');
+        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            var rdata = JSON.parse(xhr.responseText);
+            if (rdata.code == 1) {          //必须与Arduino C 中的 server.send() 中定义匹配
+              location.href = '/history.html';
+            }
+          }
+        }
+        xhr.send();
+      }
+      
+    };
+</script>
+
+</body>
+</html>
